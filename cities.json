@@ -43,5 +43,20 @@
          }
       ],
       "py/object":"classes.City.City"
+   },
+   {
+      "Name":"London",
+      "PhotoSourceList":[
+         {
+            "CropBottom":55,
+            "CropLeft":0,
+            "CropRight":0,
+            "CropTop":0,
+            "Kind":"Image",
+            "Url":"https://api.deckchair.com/v1/viewer/image/5e9548060d7ba10001d1564e",
+            "py/object":"classes.PhotoSource.PhotoSource"
+         }
+      ],
+      "py/object":"classes.City.City"
    }
 ]
