@@ -1,10 +1,31 @@
 from classes.PhotoSource import PhotoSource
 
+from typing import List
+
 from cv2 import cv2
 import numpy as np
 import requests, ffmpeg
 
 import os
+
+def processPhotoSourceList(sourcelist: List[PhotoSource]) -> str:
+
+    colors = []
+
+    for source in sourcelist:
+
+        imageArr = getImageArrayFromUrl(source.Url, source.Kind)
+        imageArrCrop = cropImageArray(imageArr, source.CropTop, source.CropBottom, source.CropLeft, source.CropRight)
+        color = getAverageColor(imageArrCrop)
+        colors.append(color)
+
+    if len(colors) > 1:
+        avg = np.average(colors, axis = 1)
+    else:
+        avg = colors[0]
+
+    return getColorString(avg)
+
 
 def cropImageArray(img: np.ndarray, cropTop: int, cropBottom: int, cropLeft: int, cropRight: int) -> np.ndarray:
 
@@ -33,10 +54,9 @@ def getAverageColor(img: np.ndarray) -> str:
     _, counts = np.unique(labels, return_counts=True)
 
     dominant = palette[np.argmax(counts)]
-    dominant_hex = [format(int(c), 'x').zfill(2) for c in dominant]
-    dominant_str = f"#{''.join(dominant_hex[::-1])}"
 
-    return dominant_str
+    return dominant
+
 
 def getImageArrayFromFile(filename: str) -> np.ndarray:
 
@@ -63,5 +83,12 @@ def getImageArrayFromUrl(url: str, kind: str) -> np.ndarray:
         )
 
         image = np.asarray(bytearray(out) ,dtype=np.uint8)
+
         return cv2.imdecode(image, -1)
 
+def getColorString(color: np.ndarray) -> str:
+
+    colorHex = [format(int(c), 'x').zfill(2) for c in color]
+    colorStr = f"#{''.join(colorHex[::-1])}"
+
+    return colorStr
