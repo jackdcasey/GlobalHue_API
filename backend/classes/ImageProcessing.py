@@ -19,10 +19,7 @@ def processPhotoSourceList(sourcelist: List[PhotoSource]) -> str:
         color = getAverageColor(imageArrCrop)
         colors.append(color)
 
-    if len(colors) > 1:
-        avg = np.average(colors, axis = 1)
-    else:
-        avg = colors[0]
+    avg = np.mean(colors, axis = 0)
 
     return getColorString(avg)
 
