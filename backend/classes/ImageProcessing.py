@@ -6,6 +6,19 @@ import requests, ffmpeg
 
 import os
 
+def cropImageArray(img: np.ndarray, cropTop: int, cropBottom: int, cropLeft: int, cropRight: int) -> np.ndarray:
+
+    h = img.shape[0]
+    w = img.shape[0]
+
+    ct = int(h * (cropTop / 100))
+    cb = int(h - (h * (cropBottom / 100)))
+
+    cl = int(w * (cropLeft / 100))
+    cr = int(w - (w * (cropRight / 100)))
+
+    return img[ct:cb, cl:cr]
+
 def getAverageColor(img: np.ndarray) -> str:
 
     img = cv2.resize(img, (150, 150))
