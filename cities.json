@@ -22,11 +22,26 @@
              "CropLeft":0,
              "CropRight":0,
              "CropTop":0,
-             "Kind":"Stream",
-             "Url":"https://s11.ipcamlive.com/streams/0b5e884dfca29a5f3/stream.m3u8",
+             "Kind":"Image",
+             "Url":"https://cdn.tegna-media.com/king/weather/waterfront.jpg",
              "py/object":"classes.PhotoSource.PhotoSource"
           }
        ],
        "py/object":"classes.City.City"
-    }
+    },
+    {
+      "Name":"Sydney",
+      "PhotoSourceList":[
+         {
+            "CropBottom":70,
+            "CropLeft":0,
+            "CropRight":0,
+            "CropTop":0,
+            "Kind":"Stream",
+            "Url":"https://s42.ipcamlive.com/streams/2a5e94894c9779849/stream.m3u8",
+            "py/object":"classes.PhotoSource.PhotoSource"
+         }
+      ],
+      "py/object":"classes.City.City"
+   }
 ]
