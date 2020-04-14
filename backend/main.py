@@ -1,20 +1,20 @@
 from classes.City import City
 from classes.PhotoSource import PhotoSource
-from classes.ImageProcessing import getAverageColor, getImageArrayFromFile, getImageArrayFromUrl
+from classes.ImageProcessing import processPhotoSourceList
 
 from typing import List
 
 import jsonpickle
 
-import os
-
 def main():
+
     cities = loadConfig("cities.json")
 
     results = {}
 
     for city in cities:
-        results[city.Name] = [getAverageColor(getImageArrayFromUrl(ps.Url, ps.Kind)) for ps in city.PhotoSourceList]
+
+        results[city.Name] = processPhotoSourceList(city.PhotoSourceList)
 
     print(results)
 
