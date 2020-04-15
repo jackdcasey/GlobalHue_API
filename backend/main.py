@@ -6,17 +6,33 @@ from typing import List
 
 import jsonpickle
 
+import os
+
 def main():
 
-    cities = loadConfig("cities.json")
+    print("Starting")
+
+    cwd = os.path.dirname(os.path.abspath(__file__))
+    citiesFile = os.path.join(cwd, 'cities.json')
+
+    print(f"Loading from {citiesFile}")
+
+    cities = loadConfig(citiesFile)
 
     results = {}
 
     for city in cities:
 
-        results[city.Name] = processPhotoSourceList(city.PhotoSourceList)
+        print(city.Name)
+
+        try:
+            results[city.Name] = processPhotoSourceList(city.PhotoSourceList)
+        except:
+            pass
 
     print(results)
+
+    print("Exiting")
 
 def loadConfig(filePath) -> List[City]:
     with open(filePath, 'r') as f:
