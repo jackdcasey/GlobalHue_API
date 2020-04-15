@@ -63,6 +63,8 @@ def getImageArrayFromFile(filename: str) -> np.ndarray:
 
 def getImageArrayFromUrl(url: str, kind: str) -> np.ndarray:
 
+    print(f"Opening {url} as {kind}")
+
     if kind == "Image":
 
         resp = requests.get(url)
@@ -76,6 +78,8 @@ def getImageArrayFromUrl(url: str, kind: str) -> np.ndarray:
             ffmpeg
             .input(url)
             .output('pipe:', format='image2', vcodec='mjpeg', vframes=1)
+            .global_args('-loglevel', 'warning')
+            .global_args('-hide_banner')
             .run(capture_stdout=True)
         )
 
