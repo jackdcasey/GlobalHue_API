@@ -12,7 +12,8 @@ import os, time
 def main():
 
     start()
-    schedule.every(1).minutes.do(start)
+
+    schedule.every(10).minutes.do(start)
 
     while True:
         schedule.run_pending()
