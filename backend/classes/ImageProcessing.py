@@ -14,10 +14,17 @@ def processPhotoSourceList(sourcelist: List[PhotoSource]) -> str:
 
     for source in sourcelist:
 
-        imageArr = getImageArrayFromUrl(source.Url, source.Kind)
-        imageArrCrop = cropImageArray(imageArr, source.CropTop, source.CropBottom, source.CropLeft, source.CropRight)
-        color = getAverageColor(imageArrCrop)
-        colors.append(color)
+        try:
+            imageArr = getImageArrayFromUrl(source.Url, source.Kind)
+            imageArrCrop = cropImageArray(imageArr, source.CropTop, source.CropBottom, source.CropLeft, source.CropRight)
+            color = getAverageColor(imageArrCrop)
+            colors.append(color)
+        except:
+            print(f"Error getting color from: {source}")
+            pass
+
+    if len(colors) == 0:
+        raise LookupError("Unable to determine color from all sources")
 
     avg = np.mean(colors, axis = 0)
 
@@ -93,3 +100,7 @@ def getColorString(color: np.ndarray) -> str:
     colorStr = f"#{''.join(colorHex[::-1])}"
 
     return colorStr
+
+class LookupError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
