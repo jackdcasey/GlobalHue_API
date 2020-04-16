@@ -1,14 +1,24 @@
 from classes.City import City
 from classes.PhotoSource import PhotoSource
 from classes.ImageProcessing import processPhotoSourceList
+from classes.db import WriteToDatabase, GetAllInTable
 
 from typing import List
 
-import jsonpickle
+import jsonpickle, schedule
 
-import os
+import os, time
 
 def main():
+
+    start()
+    schedule.every(1).minutes.do(start)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+def start():
 
     print("Starting")
 
@@ -19,18 +29,21 @@ def main():
 
     cities = loadConfig(citiesFile)
 
-    results = {}
-
     for city in cities:
 
         print(city.Name)
 
         try:
-            results[city.Name] = processPhotoSourceList(city.PhotoSourceList)
-        except:
-            pass
+            color = processPhotoSourceList(city.PhotoSourceList)
+        except LookupError:
+            color = "Error"
 
-    print(results)
+        WriteToDatabase('GlobalHue_Current',
+            {
+                'location': city.Name,
+                'color': color
+            }
+        )
 
     print("Exiting")
 
