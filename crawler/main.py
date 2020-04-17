@@ -58,10 +58,10 @@ def start():
         WriteToDatabase(
             DB_TABLE_CURRENT,
             {
-                'location': city.Name,
+                'city': city.Name,
                 'color': color,
                 'success': success,
-                'time': displaytime
+                'capturetime': displaytime
             }
         )
 
@@ -69,10 +69,10 @@ def start():
             DB_TABLE_HISTORY,
             {
                 'uuid': str(uuid.uuid4()),
-                'location': city.Name,
+                'city': city.Name,
                 'color': color,
                 'success': success,
-                'time': displaytime,
+                'capturetime': displaytime,
                 'ttl': ttl
             }
         )
