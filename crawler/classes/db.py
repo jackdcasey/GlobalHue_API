@@ -13,12 +13,3 @@ def WriteToDatabase(table: str, data: dict) -> None:
     table.put_item(
         Item = data
     )
-
-def GetAllInTable(table: str) -> dict:
-
-    dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(table)
-
-    data = table.scan()
-
-    return data['Items']
