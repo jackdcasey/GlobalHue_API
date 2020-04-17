@@ -20,11 +20,10 @@ def processPhotoSourceList(sourcelist: List[PhotoSource]) -> str:
             color = getAverageColor(imageArrCrop)
             colors.append(color)
         except:
-            print(f"Error getting color from: {source}")
-            pass
+            print(f"Error getting color from: {source.Url}")
 
     if len(colors) == 0:
-        raise LookupError("Unable to determine color from all sources")
+        raise ColorLookupError("Unable to determine color from all sources")
 
     avg = np.mean(colors, axis = 0)
 
@@ -101,6 +100,6 @@ def getColorString(color: np.ndarray) -> str:
 
     return colorStr
 
-class LookupError(Exception):
+class ColorLookupError(Exception):
     def __init__(self, message):
         super().__init__(message)

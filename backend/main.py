@@ -1,19 +1,27 @@
 from classes.City import City
 from classes.PhotoSource import PhotoSource
-from classes.ImageProcessing import processPhotoSourceList
-from classes.db import WriteToDatabase, GetAllInTable
+from classes.ImageProcessing import processPhotoSourceList, ColorLookupError
+from classes.db import WriteToDatabase
 
 from typing import List
+from datetime import timedelta
 
 import jsonpickle, schedule
 
-import os, time
+import os, time, datetime, uuid
+
+DB_TABLE_CURRENT = 'GlobalHue_Current'
+DB_TABLE_HISTORY = 'GlobalHue_History'
+
+HISTORY_DAYS = 14
+
+INTERVAL_MIN = 15
 
 def main():
 
     start()
 
-    schedule.every(10).minutes.do(start)
+    schedule.every(INTERVAL_MIN).minutes.do(start)
 
     while True:
         schedule.run_pending()
@@ -30,19 +38,42 @@ def start():
 
     cities = loadConfig(citiesFile)
 
+    runtime = datetime.datetime.utcnow()
+    displaytime = runtime.replace(tzinfo=datetime.timezone.utc).replace(microsecond=0).isoformat()
+    ttl = int((runtime + timedelta(days = HISTORY_DAYS)).timestamp())
+
     for city in cities:
 
         print(city.Name)
 
+        success = True
+
         try:
             color = processPhotoSourceList(city.PhotoSourceList)
-        except LookupError:
-            color = "Error"
+        except ColorLookupError as e:
+            print(e)
+            success = False
+            color = "#ffffff"
 
-        WriteToDatabase('GlobalHue_Current',
+        WriteToDatabase(
+            DB_TABLE_CURRENT,
             {
                 'location': city.Name,
-                'color': color
+                'color': color,
+                'success': success,
+                'time': displaytime
+            }
+        )
+
+        WriteToDatabase(
+            DB_TABLE_HISTORY,
+            {
+                'uuid': str(uuid.uuid4()),
+                'location': city.Name,
+                'color': color,
+                'success': success,
+                'time': displaytime,
+                'ttl': ttl
             }
         )
 
