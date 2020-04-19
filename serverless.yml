@@ -3,6 +3,7 @@ service: GlobalHue-API
 plugins:
   - serverless-python-requirements
   - serverless-wsgi
+  - serverless-domain-manager
 
 custom:
   wsgi:
@@ -10,6 +11,11 @@ custom:
     packRequirements: false
   pythonRequirements:
     dockerizePip: non-linux
+  customDomain:
+    domainName: api.globalhue.xyz
+    basPath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
 
 provider:
   name: aws

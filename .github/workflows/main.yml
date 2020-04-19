@@ -15,10 +15,10 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-          
+
     - run: npm install
-    - run: npm install serverless-wsgi serverless-python-requirements
-      
+    - run: npm install serverless-wsgi serverless-python-requirements serverless-domain-manager
+
     - name: Serverless
       uses: jackdcasey/github-action@python3.8-nodejs13
       with:
