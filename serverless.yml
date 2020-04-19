@@ -13,7 +13,7 @@ custom:
 
 provider:
   name: aws
-  runtime: python3.7
+  runtime: python3.6
   role: arn:aws:iam::541928508547:role/GlobalHueRole
   stage: dev
   region: us-west-2
