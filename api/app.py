@@ -19,6 +19,8 @@ def cities():
 
 @app.route("/cities/<cityname>")
 def specific_city(cityname: str):
+    cityname = cityname.lower().capitalize()
+
     data = ScanTable(
         DB_TABLE_HISTORY,
         'city',
