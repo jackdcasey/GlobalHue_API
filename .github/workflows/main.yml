@@ -20,7 +20,7 @@ jobs:
     - run: npm install serverless-wsgi serverless-python-requirements
       
     - name: Serverless
-      uses: serverless/github-action@v1.53.0
+      uses: dhollerbach/actions.serverless-with-python-requirements@1.0.13
       with:
         args: deploy
       env:
