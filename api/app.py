@@ -41,8 +41,6 @@ def GetFullTable(table: str) -> dict:
 
     return response['Items']
 
-
-
 def ScanTable(table: str, filter_key: str, filter_value: str, attributes: list) -> dict:
 
     dynamodb = boto3.resource('dynamodb')
