@@ -1,16 +1,28 @@
 {
-  "name": "api",
+  "name": "GlobalHue",
   "version": "1.0.0",
-  "description": "",
+  "description": "![CI](https://github.com/jackdcasey/GlobalHue/workflows/CI/badge.svg)",
   "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-python-requirements": "^5.1.0",
+    "serverless-wsgi": "^1.7.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackdcasey/GlobalHue.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "serverless-python-requirements": "^5.1.0",
-    "serverless-wsgi": "^1.7.4"
-  }
+  "bugs": {
+    "url": "https://github.com/jackdcasey/GlobalHue/issues"
+  },
+  "homepage": "https://github.com/jackdcasey/GlobalHue#readme"
 }
