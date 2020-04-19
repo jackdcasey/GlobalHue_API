@@ -1,32 +1,45 @@
+import boto3
+from boto3.dynamodb.conditions import Key
+
 from flask import Flask
 app = Flask(__name__)
 
-import json, boto3, os
-
-from boto3.dynamodb.conditions import Key
-
-
-
+DB_TABLE_CURRENT = 'GlobalHue_Current'
+DB_TABLE_HISTORY = 'GlobalHue_History'
 
 @app.route("/")
 def hello():
-    return "Hello Folks!"
+    return {"Status": "OK"}
+
+@app.route("/cities/")
+def cities():
+    data = GetFullTable(DB_TABLE_CURRENT)
+
+    return {"Items": data}
+
+@app.route("/cities/<cityname>")
+def specific_city(cityname: str):
+    cityname = cityname.lower().capitalize()
+
+    data = ScanTable(
+        DB_TABLE_HISTORY,
+        'city',
+        cityname,
+        ['color', 'success', 'capturetime']
+    )
+
+    return {"Items": data}
 
 
-# def lambda_handler(event, context):
 
-#     data = ScanTable(
-#         DB_TABLE_HISTORY,
-#         'city',
-#         'Vancouver',
-#         ['city', 'color', 'success', 'capturetime']
-#     )
+def GetFullTable(table: str) -> dict:
 
-#     return {
-#         'statusCode': 200,
-#         'body': json.dumps(data)
-#     }
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table(table)
 
+    response = table.scan()
+
+    return response['Items']
 
 def ScanTable(table: str, filter_key: str, filter_value: str, attributes: list) -> dict:
 
