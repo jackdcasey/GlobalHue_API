@@ -99,5 +99,5 @@ ENV/
 
 #vscode
 .vscode/
-api/.serverless/
+.serverless/
 node_modules/
