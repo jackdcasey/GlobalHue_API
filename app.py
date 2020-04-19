@@ -7,6 +7,8 @@ app = Flask(__name__)
 DB_TABLE_CURRENT = 'GlobalHue_Current'
 DB_TABLE_HISTORY = 'GlobalHue_History'
 
+# Routes
+
 @app.route("/")
 def hello():
     return {"Status": "OK"}
@@ -30,7 +32,12 @@ def specific_city(cityname: str):
 
     return {"Items": data}
 
+@app.route("/test")
+def test():
+    return {"Test": "Working"}
 
+
+# Functions
 
 def GetFullTable(table: str) -> dict:
 
