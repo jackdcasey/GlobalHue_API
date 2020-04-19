@@ -17,6 +17,7 @@ jobs:
         node-version: '10.x'
           
     - run: npm install serverless-wsgi serverless-python-requirements
+      working-directory: ./api
       
     - name: Serverless
       uses: serverless/github-action@v1.53.0
