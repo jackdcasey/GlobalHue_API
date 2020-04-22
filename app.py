@@ -32,10 +32,6 @@ def specific_city(cityname: str):
 
     return {"Items": data}
 
-@app.route("/test")
-def test():
-    return {"Test": "Working"}
-
 
 # Functions
 
