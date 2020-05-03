@@ -2,7 +2,10 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 from flask import Flask
+from flask-cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 
 DB_TABLE_CURRENT = 'GlobalHue_Current'
 DB_TABLE_HISTORY = 'GlobalHue_History'
