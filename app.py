@@ -2,7 +2,7 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 from flask import Flask
-from flask-cors import CORS
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
