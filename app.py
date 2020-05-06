@@ -3,6 +3,7 @@ from boto3.dynamodb.conditions import Key
 
 from flask import Flask
 from flask_cors import CORS
+import simplejson as json
 
 app = Flask(__name__)
 CORS(app)
