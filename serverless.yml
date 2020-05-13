@@ -13,7 +13,7 @@ custom:
     dockerizePip: non-linux
   customDomain:
     domainName: api.globalhue.xyz
-    basPath: ''
+    basePath: ''
     stage: ${self:provider.stage}
     createRoute53Record: true
 
