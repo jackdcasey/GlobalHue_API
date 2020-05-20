@@ -1,4 +1,4 @@
-import boto3
+import boto3, string
 from boto3.dynamodb.conditions import Key
 
 from flask import Flask
@@ -25,7 +25,8 @@ def cities():
 
 @app.route("/cities/<cityname>")
 def specific_city(cityname: str):
-    cityname = cityname.lower().capitalize()
+
+    cityname = string.capwords(cityname.lower())
 
     data = ScanTable(
         DB_TABLE_HISTORY,
@@ -33,8 +34,6 @@ def specific_city(cityname: str):
         cityname,
         ['color', 'success', 'capturetime']
     )
-
-    sortedData = data.sort(key=lambda d: d['capturetime'], reverse=True)
 
     return {"Items": data[:10]}
 
