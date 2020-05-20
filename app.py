@@ -34,7 +34,9 @@ def specific_city(cityname: str):
         ['color', 'success', 'capturetime']
     )
 
-    return {"Items": data}
+    sortedData = data.sort(key=lambda d: d['capturetime'], reverse=True)
+
+    return {"Items": data[:10]}
 
 
 # Functions
